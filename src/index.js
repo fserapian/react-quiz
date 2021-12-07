@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './index.css';
+import Quiz from './components/Quiz';
+import { QuizProvider } from './contexts/quiz';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <QuizProvider>
+     <Quiz />
+    </QuizProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
