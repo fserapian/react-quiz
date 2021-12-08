@@ -17,10 +17,13 @@ const reducer = (state, action) => {
       ? state.currentQuestionIndex
       : state.currentQuestionIndex + 1;
 
+    const answers = showResults ? [] : shuffleAnswers(state.questions[currentQuestionIndex]);
+
     return {
       ...state,
       currentQuestionIndex,
       showResults,
+      answers,
     };
   }
 
