@@ -1,9 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { QuizContext } from "../contexts/quiz";
 import Question from "./Question";
 
 const Quiz = () => {
   const [quizState, dispatch] = useContext(QuizContext);
+  // This is url can be generated in https://opentdb.com/api_config.php
+  const apiUrl = 'YOUR_API_URL';
+
+  useEffect(() => {
+    if (quizState.questions.length > 0) {
+      return;
+    }
+
+    fetch(apiUrl).then((res) => {
+      return res.json();
+    })
+      .then((data) => {
+        dispatch({ type: 'LOADED_QUESTIONS', payload: data.results });
+      });
+  });
 
   return (
     <div className="quiz">
@@ -17,7 +32,7 @@ const Quiz = () => {
           <div className="next-button" onClick={() => dispatch({ type: "RESTART" })}>Restart</div>
         </div>
       )}
-      {!quizState.showResults && (
+      {!quizState.showResults && quizState.questions.length > 0 && (
         <div>
           <div className="score">
             Question {quizState.currentQuestionIndex + 1}/
